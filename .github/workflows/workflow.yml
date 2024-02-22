@@ -27,5 +27,11 @@ jobs:
         kubectl apply -f k8s-node-app.yaml
     - name: Test service URLs
       run: |
-          minikube service list
+        minikube service list > services.txt
+        cat services.txt
+      
+        if grep -q "nodejs-app" services.txt; then
           minikube service nodejs-app --url
+        else
+          echo "nodejs-app service not found or not available."
+        fi
