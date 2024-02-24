@@ -27,6 +27,8 @@ jobs:
         kubectl apply -f k8s-node-app.yaml
     - name: Test service URLs
       run: |
-          NODE_PORT=$(kubectl get svc nodejs-app -o=jsonpath='{.spec.ports[0].nodePort}')
-          MINIKUBE_IP=$(minikube ip)
-          echo "Nodejs-app URL: http://$MINIKUBE_IP:$NODE_PORT"
+        minikube service list
+        minikube service nodejs-app --url
+        minikube kubectl --wait --for=condition=Ready pod --selector=app=nodejs-app
+        minikube kubectl -- get pods
+        minikube service nodejs-app --url
