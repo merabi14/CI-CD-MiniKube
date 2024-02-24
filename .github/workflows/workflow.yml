@@ -28,5 +28,5 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        minikube kubectl --wait --for=condition=Ready pod --selector=app=nodejs-app
+        minikube kubectl wait --for=condition=Ready pod --selector=app=nodejs-app
         minikube service nodejs-app --url
